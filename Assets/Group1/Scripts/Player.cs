@@ -1,24 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _speed;
-    public bool timer;
-    public float time;
+    [SerializeField] private float _speed = 4f;
+    [SerializeField] private float _speedUpMultiplier = 2f;
+    [SerializeField] private float _speedUpDuration = 2f;
 
     private void Update()
     {
-        if (timer) //если вышел таймер скорость понижается вдвое
-        {
-            time -= Time.deltaTime;
-            if (time < 0)
-            {
-                timer = false;
-                _speed /= 2;
-            }
-        }
-
         Move();
     }
 
@@ -29,13 +19,15 @@ public class Player : MonoBehaviour
         transform.Translate(moveDirection * _speed * Time.deltaTime);
     }
 
-    public void SendMEssage(GameObject b)
+    public void ActivateSpeedUp()
     {
-        if (b.name == "speed")
-        {
-            _speed *= 2;
-            timer = true;
-            time = 2;
-        }
+        StartCoroutine(SpeedUpBonus());
+    }
+
+    private IEnumerator SpeedUpBonus()
+    {
+        _speed *= _speedUpMultiplier;
+        yield return new WaitForSeconds(_speedUpDuration);
+        _speed /= _speedUpMultiplier;
     }
 }

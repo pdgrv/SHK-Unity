@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 2f;
     [SerializeField] private float _movementRadius = 4f;
-    [SerializeField] private float _dieCollisionRange = 0.2f;
+    [SerializeField] private float _collisionRange = 0.2f;
 
     private Vector3 _movementPoint;
     private Player _player;
@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _player = FindObjectOfType<Player>();
+
         _movementPoint = GetRandomPoint();
     }
 
@@ -25,7 +26,7 @@ public class Enemy : MonoBehaviour
         if (transform.position == _movementPoint)
             _movementPoint = GetRandomPoint();
 
-        if (Vector3.Distance(transform.position, _player.transform.position) < _dieCollisionRange)
+        if (Vector3.Distance(transform.position, _player.transform.position) < _collisionRange)
             Die();
     }
 

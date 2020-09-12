@@ -24,17 +24,13 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertival"), 0);
+        Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
 
         transform.Translate(moveDirection * _speed * Time.deltaTime);
     }
 
     public void SendMEssage(GameObject b)
     {
-        if (b.name == "enemy")
-        {
-            Destroy(b);
-        }
         if (b.name == "speed")
         {
             _speed *= 2;

@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _movementRadius = 4f;
     [SerializeField] private float _collisionRange = 0.2f;
 
-    private Vector3 _movementPoint;
+    private Vector3 _target;
     private Player _player;
 
     public event UnityAction<Enemy> EnemyDied;
@@ -16,15 +16,15 @@ public class Enemy : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
 
-        _movementPoint = GetRandomPoint();
+        _target = GetRandomPoint();
     }
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _movementPoint, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
 
-        if (transform.position == _movementPoint)
-            _movementPoint = GetRandomPoint();
+        if (transform.position == _target)
+            _target = GetRandomPoint();
 
         if (Vector3.Distance(transform.position, _player.transform.position) < _collisionRange)
             Die();
